@@ -45,4 +45,7 @@ A7AC3
 + python day04/part2.py day04/input.txt
 984
 > 11186 μs
++ python day05/part1.py day05/input.txt
+c6697b55
+> 8800 ms
 ```
