@@ -21,4 +21,7 @@ for 2016, I'm planning to implement in python
 
 ```console
 $ find -maxdepth 1 -type d -name 'day*' -not -name day00 | sort | xargs --replace bash -xc 'python {}/part1.py {}/input.txt; python {}/part2.py {}/input.txt'
++ python day01/part1.py day01/input.txt
+246
+> 434 μs
 ```

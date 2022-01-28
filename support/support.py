@@ -236,5 +236,5 @@ class Direction4(enum.Enum):
         vals = self._vals
         return vals[(vals.index(self) + 2) % len(vals)]
 
-    def apply(self, x: int, y: int) -> tuple[int, int]:
-        return self.x + x, self.y + y
+    def apply(self, x: int, y: int, *, n: int = 1) -> tuple[int, int]:
+        return self.x * n + x, self.y * n + y
