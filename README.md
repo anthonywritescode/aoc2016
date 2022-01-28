@@ -60,4 +60,7 @@ owlaxqvq
 + python day07/part1.py day07/input.txt
 118
 > 25829 μs
++ python day07/part2.py day07/input.txt
+260
+> 39286 μs
 ```
