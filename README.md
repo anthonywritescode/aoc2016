@@ -36,4 +36,7 @@ A7AC3
 + python day03/part1.py day03/input.txt
 862
 > 3581 μs
++ python day03/part2.py day03/input.txt
+1577
+> 5994 μs
 ```
