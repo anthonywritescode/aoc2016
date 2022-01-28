@@ -57,4 +57,7 @@ agmwzecr
 + python day06/part2.py day06/input.txt
 owlaxqvq
 > 2138 μs
++ python day07/part1.py day07/input.txt
+118
+> 25829 μs
 ```
