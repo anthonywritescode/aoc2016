@@ -39,4 +39,7 @@ A7AC3
 + python day03/part2.py day03/input.txt
 1577
 > 5994 μs
++ python day04/part1.py day04/input.txt
+185371
+> 16968 μs
 ```
