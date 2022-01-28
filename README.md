@@ -54,4 +54,7 @@ c6697b55
 + python day06/part1.py day06/input.txt
 agmwzecr
 > 2039 μs
++ python day06/part2.py day06/input.txt
+owlaxqvq
+> 2138 μs
 ```
