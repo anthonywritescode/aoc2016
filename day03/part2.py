@@ -3,8 +3,8 @@ from __future__ import annotations
 import argparse
 import itertools
 import os.path
-from typing import Generator
-from typing import Iterable
+from collections.abc import Generator
+from collections.abc import Iterable
 from typing import TypeVar
 
 import pytest
@@ -19,7 +19,7 @@ T = TypeVar('T')
 def chunk_iter(
         iterable: Iterable[T],
         n: int,
-) -> Generator[tuple[T, ...], None, None]:
+) -> Generator[tuple[T, ...]]:
     """Yields an iterator in chunks
 
     For example you can do
