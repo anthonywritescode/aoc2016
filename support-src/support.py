@@ -11,6 +11,8 @@ import urllib.error
 import urllib.parse
 import urllib.request
 from collections.abc import Generator
+from collections.abc import Iterable
+from typing import NamedTuple
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 
@@ -35,7 +37,7 @@ def timing(name: str = '') -> Generator[None]:
 def _get_cookie_headers() -> dict[str, str]:
     with open(os.path.join(HERE, '../.env')) as f:
         contents = f.read().strip()
-    return {'Cookie': contents}
+    return {'Cookie': contents, 'User-Agent': 'anthonywritescode, hi eric'}
 
 
 def get_input(year: int, day: int) -> str:
@@ -74,9 +76,12 @@ def download_input() -> int:
 
     with open('input.txt', 'w') as f:
         f.write(s)
+    os.chmod('input.txt', 0o400)
 
     lines = s.splitlines()
-    if len(lines) > 10:
+    if len(lines) == 1 and len(lines[0]) < 80:
+        print(lines[0])
+    elif len(lines) > 10:
         for line in lines[:10]:
             print(line)
         print('...')
@@ -165,6 +170,11 @@ def adjacent_8(x: int, y: int) -> Generator[tuple[int, int]]:
             yield x + x_d, y + y_d
 
 
+def parse_point_comma(s: str) -> tuple[int, int]:
+    a_s, b_s = s.split(',')
+    return int(a_s), int(b_s)
+
+
 def parse_coords_int(s: str) -> dict[tuple[int, int], int]:
     coords = {}
     for y, line in enumerate(s.splitlines()):
@@ -190,17 +200,24 @@ def parse_numbers_comma(s: str) -> list[int]:
     return [int(x) for x in s.strip().split(',')]
 
 
+class Bound(NamedTuple):
+    min: int
+    max: int
+
+    @property
+    def range(self) -> range:
+        return range(self.min, self.max + 1)
+
+
+def bounds(points: Iterable[tuple[int, ...]]) -> tuple[Bound, ...]:
+    return tuple(Bound(min(dim), max(dim)) for dim in zip(*points))
+
+
 def format_coords_hash(coords: set[tuple[int, int]]) -> str:
-    min_x = min(x for x, _ in coords)
-    max_x = max(x for x, _ in coords)
-    min_y = min(y for _, y in coords)
-    max_y = max(y for _, y in coords)
+    bx, by = bounds(coords)
     return '\n'.join(
-        ''.join(
-            '#' if (x, y) in coords else ' '
-            for x in range(min_x, max_x + 1)
-        )
-        for y in range(min_y, max_y + 1)
+        ''.join('#' if (x, y) in coords else ' ' for x in bx.range)
+        for y in by.range
     )
 
 
@@ -216,6 +233,12 @@ class Direction4(enum.Enum):
 
     def __init__(self, x: int, y: int) -> None:
         self.x, self.y = x, y
+
+    def __lt__(self, other: object) -> bool:
+        if not isinstance(other, Direction4):
+            return NotImplemented
+        else:
+            return (self.x, self.y) < (other.x, other.y)
 
     @property
     def _vals(self) -> tuple[Direction4, ...]:
